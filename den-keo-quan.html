@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đèn kéo quân</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: white;
+            background: linear-gradient(135deg, #101935, #164e8a, #101935);
+        }
+
+        h1 {
+            padding-top: 35px;
+            color: #ffd166;
+            font-size: 36px;
+        }
+
+        p {
+            color: #e0ecff;
+        }
+
+        .scene {
+            width: 260px;
+            height: 300px;
+            margin: 80px auto;
+            perspective: 1000px;
+        }
+
+        .lantern {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: xoay 12s linear infinite;
+        }
+
+        /* Dừng quay khi đưa chuột vào */
+        .scene:hover .lantern {
+            animation-play-state: paused;
+        }
+
+        .face {
+            position: absolute;
+            left: 30px;
+            top: 0;
+            width: 200px;
+            height: 280px;
+            border: 3px solid #ffd166;
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            backface-visibility: hidden;
+            box-shadow: 0 0 18px #ffd16666;
+        }
+
+        .face img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .face1 { transform: rotateY(0deg) translateZ(173px); }
+        .face2 { transform: rotateY(60deg) translateZ(173px); }
+        .face3 { transform: rotateY(120deg) translateZ(173px); }
+        .face4 { transform: rotateY(180deg) translateZ(173px); }
+        .face5 { transform: rotateY(240deg) translateZ(173px); }
+        .face6 { transform: rotateY(300deg) translateZ(173px); }
+
+        @keyframes xoay {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        button {
+            border: none;
+            border-radius: 25px;
+            padding: 12px 22px;
+            margin: 5px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            background: #ffd166;
+            color: #101935;
+        }
+
+        button:hover {
+            background: white;
+        }
+
+        .note {
+            margin: 30px 15px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 400px) {
+            .scene {
+                transform: scale(.85);
+                margin-top: 45px;
+                margin-bottom: 45px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🏮 ĐÈN KÉO QUÂN 🏮</h1>
+    <p>Khám phá hiệu ứng đèn kéo quân 3D</p>
+
+    <div class="scene" id="scene">
+        <div class="lantern" id="lantern">
+            <div class="face face1">
+                <img src="images/anh1.jpg.jpg" alt="Mặt đèn 1">
+            </div>
+
+            <div class="face face2">
+                <img src="images/anh2.jpg.jpg" alt="Mặt đèn 2">
+            </div>
+
+            <div class="face face3">
+                <img src="images/anh3.jpg.jpg" alt="Mặt đèn 3">
+            </div>
+
+            <div class="face face4">
+                <img src="images/anh4.jpg.jpg" alt="Mặt đèn 4">
+            </div>
+
+            <div class="face face5">
+                <img src="images/anh5.jpg.jpg" alt="Mặt đèn 5">
+            </div>
+
+            <div class="face face6">
+                <img src="images/anh6.jpg.jpg" alt="Mặt đèn 6">
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <button onclick="dungDen()">⏸ Dừng đèn</button>
+        <button onclick="quayDen()">▶ Tiếp tục</button>
+        <button onclick="doiTocDo()">⚡ Đổi tốc độ</button>
+    </div>
+
+    <p class="note">
+        Di chuyển chuột vào đèn để tạm dừng.<br>
+        Đưa chuột ra ngoài để đèn tiếp tục quay.
+    </p>
+
+    <script>
+        const scene = document.getElementById("scene");
+        const lantern = document.getElementById("lantern");
+
+        let daDung = false;
+        let tocDo = 12;
+
+        scene.addEventListener("mouseenter", function () {
+            lantern.style.animationPlayState = "paused";
+        });
+
+        scene.addEventListener("mouseleave", function () {
+            if (!daDung) {
+                lantern.style.animationPlayState = "running";
+            }
+        });
+
+        function dungDen() {
+            daDung = true;
+            lantern.style.animationPlayState = "paused";
+        }
+
+        function quayDen() {
+            daDung = false;
+
+            if (!scene.matches(":hover")) {
+                lantern.style.animationPlayState = "running";
+            }
+        }
+
+        function doiTocDo() {
+            tocDo = tocDo === 12 ? 6 : tocDo === 6 ? 20 : 12;
+            lantern.style.animationDuration = tocDo + "s";
+        }
+    </script>
+</body>
+</html>
